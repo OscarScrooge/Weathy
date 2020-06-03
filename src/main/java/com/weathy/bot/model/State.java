@@ -10,13 +10,21 @@ public class State {
 
     public State(String name, List<Integer> idCities){
          this.name = name;
-         setCities(idCities);
+        setCitiesAtBeginig(idCities);
     }
 
-    private void setCities(List<Integer> idCities){
+    private void setCitiesAtBeginig(List<Integer> idCities){
         for(int id:idCities){
             City city = new City(id);
             cities.add(city);
         }
+    }
+
+    public List<City> getCities() {
+        return cities;
+    }
+
+    public void setCities(List<City> cities) {
+        this.cities = cities;
     }
 }

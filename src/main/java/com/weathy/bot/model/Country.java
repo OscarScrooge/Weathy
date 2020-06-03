@@ -27,4 +27,11 @@ public class Country {
         }
     }
 
+    public List<State> getStates() {
+        return states;
+    }
+
+    public void setStates(List<State> states){
+        this.states = states;
+    }
 }
