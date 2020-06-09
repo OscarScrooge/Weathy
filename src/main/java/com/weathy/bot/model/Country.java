@@ -18,10 +18,10 @@ public class Country {
 
         for (Map.Entry<String,List<Integer>> entry : data.entrySet()) {
 
-            String cityName = entry.getKey();
+            String stateName = entry.getKey();
             List<Integer> idCities= entry.getValue();
 
-            State state = new State(cityName,idCities);
+            State state = new State(stateName,idCities);
             states.add(state);
 
         }

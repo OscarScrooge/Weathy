@@ -22,18 +22,23 @@ import java.util.List;
 public class Controller {
 
     private HashMap<String, List<Integer>> data;
+    private Country country;
+    private static Controller controller = null;
 
-    public Controller( HashMap<String, List<Integer>> data) throws JSONException {
-
+    public Controller(HashMap<String, List<Integer>> data) throws JSONException {
         this.data = data;
         setCountry();
-
+        setTweet();
     }
 
 
+    /**
+     * this methoth set the cities in a state and the states in a country
+     * @throws JSONException
+     */
     private void setCountry() throws JSONException {
 
-        Country country = new Country("México",this.data);
+        country = new Country("México",this.data);
         List<State> statesList = country.getStates(); //LISTA DE ESTADOS
 
         for (int i=0; i<statesList.size();i++) {
@@ -51,8 +56,13 @@ public class Controller {
         country.setStates(statesList);
     }
 
-
-    public City setWeather(City city) throws JSONException {
+    /**
+     * it sets the weather by city
+     * @param city
+     * @return city whit weather
+     * @throws JSONException
+     */
+    private City setWeather(City city) throws JSONException {
 
         City cityWithWeather = city;
         JSONObject weatherProps= null;
@@ -119,6 +129,20 @@ public class Controller {
         cityWithWeather.setWeather(weather);
 
        return cityWithWeather;
+    }
+
+    private void setTweet(){
+        String tweetText="";
+        TwitterBot bot = TwitterBot.newBot();
+       for (State state : country.getStates()){
+           for (City city: state.getCities()){
+               tweetText+= city.getName()+"\n"+
+                       city.getWeather().getWeatherPhrase()+"\n"+
+                       city.getWeather().getHairQuality()+"\n"+
+                       city.getWeather().getTemperature();
+               bot.newTweet(tweetText);
+           }
+       }
     }
 
 }
