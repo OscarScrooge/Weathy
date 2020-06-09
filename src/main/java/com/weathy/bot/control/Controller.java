@@ -60,7 +60,7 @@ public class Controller {
 
 
         try {
-            URL path = new URL("http://dataservice.accuweather.com/forecasts/v1/hourly/1hour/"+cityWithWeather.getId()+"?apikey=i8cLO8jDZn2ZE8PiVfXTb17btelOTOjI");
+            URL path = new URL("http://dataservice.accuweather.com/forecasts/v1/daily/1day/"+cityWithWeather.getId()+"?apikey=i8cLO8jDZn2ZE8PiVfXTb17btelOTOjI&language=es-mx&details=true&metric=true");
             HttpURLConnection conn = (HttpURLConnection) path.openConnection();
             conn.setRequestMethod("GET");
             conn.setRequestProperty("Accept", "application/json");
@@ -82,13 +82,40 @@ public class Controller {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+        String temperature;
+
         Weather weather  = new Weather();
-        weatherProps = (JSONObject) jsonArray.getJSONObject(0).get("Temperature");
-        weather.setTemperature(""+weatherProps.get("Value")+" "+weatherProps.get("Unit"));
+
+        /**
+         * set the hair quality
+         */
+        weatherProps = (JSONObject) jsonArray.getJSONObject(0).get("Headline");
+        weather.setHairQuality(weatherProps.getString("Text"));
+
+        /**
+         * set the min and max temperature
+         */
+        weatherProps = (JSONObject) jsonArray.getJSONObject(0).get("DailyForecasts");
+        weatherProps =weatherProps.getJSONObject("Temperature");
+        weatherProps  = weatherProps.getJSONObject("Minimum");
+        temperature = "Min: "+weatherProps.getString("Value")+""+weatherProps.getString("Unit");
+        weatherProps  = weatherProps.getJSONObject("Maximum");
+        temperature += "  Max: "+weatherProps.getString("Value")+""+weatherProps.getString("Unit");
+        weather.setTemperature(temperature);
+
+        /**
+         * set day conditions
+         */
+        weatherProps = (JSONObject) jsonArray.getJSONObject(0).get("DailyForecasts");
+        weatherProps =weatherProps.getJSONObject("Day");
+        weather.setWeatherPhrase(weatherProps.getString("IconPhrase"));
+
+        /*weather.setTemperature(""+weatherProps.get("Value")+" "+weatherProps.get("Unit"));
         weatherProps = (JSONObject) jsonArray.getJSONObject(0);
         weather.setDayLight(weatherProps.getString("IsDaylight"));
         weather.setPrecipitation(weatherProps.getString("PrecipitationProbability"));
-        weather.setWeatherPhrase(weatherProps.getString("IconPhrase"));
+        weather.setWeatherPhrase(weatherProps.getString("IconPhrase"));*/
         cityWithWeather.setWeather(weather);
 
        return cityWithWeather;

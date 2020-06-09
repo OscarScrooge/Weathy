@@ -6,15 +6,11 @@ public class Weather {
     private String weatherPhrase;
     private String dayLight;
     private String precipitation;
+    private String hairQuality;
+    private String hoursOfSun;
 
     public Weather(){}
 
-    public Weather(String temperature,String weatherPhrase,String dayLight,String precipitation){
-          this.temperature = temperature;
-          this.weatherPhrase = weatherPhrase;
-          this.dayLight = dayLight;
-          this.precipitation = precipitation;
-    }
 
     public void setTemperature(String temperature){
         this.temperature = temperature;
@@ -32,6 +28,14 @@ public class Weather {
         this.precipitation = precipitation1;
     }
 
+    public void setHairQuality(String hairQuality) {
+        this.hairQuality = hairQuality;
+    }
+
+    public void setHoursOfSun(String hoursOfSun) {
+        this.hoursOfSun = hoursOfSun;
+    }
+
     public String getTemperature(){
         return this.temperature;
     }
@@ -46,5 +50,13 @@ public class Weather {
 
     public String getPrecipitation(){
         return this.precipitation;
+    }
+
+    public String getHairQuality() {
+        return hairQuality;
+    }
+
+    public String getHoursOfSun() {
+        return hoursOfSun;
     }
 }

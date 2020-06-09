@@ -13,7 +13,7 @@ import java.util.List;
 @RestController
 public class SpeakingWeathy {
 
-    @Value("#{${props.states.cities}}")
+    @Value("#{${props.mexico.city}}")
     private HashMap<String, List<Integer>> data;
 
     @RequestMapping("/")
