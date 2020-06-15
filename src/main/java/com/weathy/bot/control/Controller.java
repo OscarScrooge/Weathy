@@ -23,7 +23,7 @@ public class Controller {
 
     private HashMap<String, List<Integer>> data;
     private Country country;
-    private static Controller controller = null;
+
 
     public Controller(HashMap<String, List<Integer>> data) throws JSONException {
         this.data = data;
@@ -65,9 +65,265 @@ public class Controller {
     private City setWeather(City city) throws JSONException {
 
         City cityWithWeather = city;
-        JSONObject weatherProps= null;
-        JSONArray jsonArray = null;
+        JSONObject propsHairQuality= null;
+        JSONObject propsTemperature= null;
+        JSONObject jsonObject = null;
+        JSONArray weatherPropsArray=null;
+        JSONObject weatherProps=null;
 
+       /* String object ="{\n" +
+                "    \"Headline\": {\n" +
+                "        \"EffectiveDate\": \"2020-06-17T01:00:00+05:30\",\n" +
+                "        \"EffectiveEpochDate\": 1592335800,\n" +
+                "        \"Severity\": 2,\n" +
+                "        \"Text\": \"Tormentas eléctricas en el área desde el martes a última hora de la noche hasta el miércoles por la tarde\",\n" +
+                "        \"Category\": \"thunderstorm\",\n" +
+                "        \"EndDate\": \"2020-06-17T19:00:00+05:30\",\n" +
+                "        \"EndEpochDate\": 1592400600,\n" +
+                "        \"MobileLink\": \"http://m.accuweather.com/es/in/gobindapur/2920226/extended-weather-forecast/2920226?unit=c&lang=es-mx\",\n" +
+                "        \"Link\": \"http://www.accuweather.com/es/in/gobindapur/2920226/daily-weather-forecast/2920226?unit=c&lang=es-mx\"\n" +
+                "    },\n" +
+                "    \"DailyForecasts\": [\n" +
+                "        {\n" +
+                "            \"Date\": \"2020-06-12T07:00:00+05:30\",\n" +
+                "            \"EpochDate\": 1591925400,\n" +
+                "            \"Sun\": {\n" +
+                "                \"Rise\": \"2020-06-12T05:05:00+05:30\",\n" +
+                "                \"EpochRise\": 1591918500,\n" +
+                "                \"Set\": \"2020-06-12T18:26:00+05:30\",\n" +
+                "                \"EpochSet\": 1591966560\n" +
+                "            },\n" +
+                "            \"Moon\": {\n" +
+                "                \"Rise\": \"2020-06-12T23:54:00+05:30\",\n" +
+                "                \"EpochRise\": 1591986240,\n" +
+                "                \"Set\": \"2020-06-13T11:47:00+05:30\",\n" +
+                "                \"EpochSet\": 1592029020,\n" +
+                "                \"Phase\": \"WaningGibbous\",\n" +
+                "                \"Age\": 21\n" +
+                "            },\n" +
+                "            \"Temperature\": {\n" +
+                "                \"Minimum\": {\n" +
+                "                    \"Value\": 28.4,\n" +
+                "                    \"Unit\": \"C\",\n" +
+                "                    \"UnitType\": 17\n" +
+                "                },\n" +
+                "                \"Maximum\": {\n" +
+                "                    \"Value\": 31.2,\n" +
+                "                    \"Unit\": \"C\",\n" +
+                "                    \"UnitType\": 17\n" +
+                "                }\n" +
+                "            },\n" +
+                "            \"RealFeelTemperature\": {\n" +
+                "                \"Minimum\": {\n" +
+                "                    \"Value\": 33.8,\n" +
+                "                    \"Unit\": \"C\",\n" +
+                "                    \"UnitType\": 17\n" +
+                "                },\n" +
+                "                \"Maximum\": {\n" +
+                "                    \"Value\": 38.5,\n" +
+                "                    \"Unit\": \"C\",\n" +
+                "                    \"UnitType\": 17\n" +
+                "                }\n" +
+                "            },\n" +
+                "            \"RealFeelTemperatureShade\": {\n" +
+                "                \"Minimum\": {\n" +
+                "                    \"Value\": 33.8,\n" +
+                "                    \"Unit\": \"C\",\n" +
+                "                    \"UnitType\": 17\n" +
+                "                },\n" +
+                "                \"Maximum\": {\n" +
+                "                    \"Value\": 38.1,\n" +
+                "                    \"Unit\": \"C\",\n" +
+                "                    \"UnitType\": 17\n" +
+                "                }\n" +
+                "            },\n" +
+                "            \"HoursOfSun\": 1.8,\n" +
+                "            \"DegreeDaySummary\": {\n" +
+                "                \"Heating\": {\n" +
+                "                    \"Value\": 0.0,\n" +
+                "                    \"Unit\": \"C\",\n" +
+                "                    \"UnitType\": 17\n" +
+                "                },\n" +
+                "                \"Cooling\": {\n" +
+                "                    \"Value\": 12.0,\n" +
+                "                    \"Unit\": \"C\",\n" +
+                "                    \"UnitType\": 17\n" +
+                "                }\n" +
+                "            },\n" +
+                "            \"AirAndPollen\": [\n" +
+                "                {\n" +
+                "                    \"Name\": \"AirQuality\",\n" +
+                "                    \"Value\": 68,\n" +
+                "                    \"Category\": \"Moderado\",\n" +
+                "                    \"CategoryValue\": 2,\n" +
+                "                    \"Type\": \"Ozono\"\n" +
+                "                },\n" +
+                "                {\n" +
+                "                    \"Name\": \"Grass\",\n" +
+                "                    \"Value\": 0,\n" +
+                "                    \"Category\": \"Bajo\",\n" +
+                "                    \"CategoryValue\": 1\n" +
+                "                },\n" +
+                "                {\n" +
+                "                    \"Name\": \"Mold\",\n" +
+                "                    \"Value\": 0,\n" +
+                "                    \"Category\": \"Bajo\",\n" +
+                "                    \"CategoryValue\": 1\n" +
+                "                },\n" +
+                "                {\n" +
+                "                    \"Name\": \"Ragweed\",\n" +
+                "                    \"Value\": 0,\n" +
+                "                    \"Category\": \"Bajo\",\n" +
+                "                    \"CategoryValue\": 1\n" +
+                "                },\n" +
+                "                {\n" +
+                "                    \"Name\": \"Tree\",\n" +
+                "                    \"Value\": 0,\n" +
+                "                    \"Category\": \"Bajo\",\n" +
+                "                    \"CategoryValue\": 1\n" +
+                "                },\n" +
+                "                {\n" +
+                "                    \"Name\": \"UVIndex\",\n" +
+                "                    \"Value\": 4,\n" +
+                "                    \"Category\": \"Moderado\",\n" +
+                "                    \"CategoryValue\": 2\n" +
+                "                }\n" +
+                "            ],\n" +
+                "            \"Day\": {\n" +
+                "                \"Icon\": 12,\n" +
+                "                \"IconPhrase\": \"Chubascos\",\n" +
+                "                \"HasPrecipitation\": true,\n" +
+                "                \"PrecipitationType\": \"Rain\",\n" +
+                "                \"PrecipitationIntensity\": \"Moderate\",\n" +
+                "                \"ShortPhrase\": \"Lluvias ocasionales y tormenta eléctrica\",\n" +
+                "                \"LongPhrase\": \"Lluvias ocasionales y tormenta eléctrica\",\n" +
+                "                \"PrecipitationProbability\": 57,\n" +
+                "                \"ThunderstormProbability\": 60,\n" +
+                "                \"RainProbability\": 57,\n" +
+                "                \"SnowProbability\": 0,\n" +
+                "                \"IceProbability\": 0,\n" +
+                "                \"Wind\": {\n" +
+                "                    \"Speed\": {\n" +
+                "                        \"Value\": 5.6,\n" +
+                "                        \"Unit\": \"km/h\",\n" +
+                "                        \"UnitType\": 7\n" +
+                "                    },\n" +
+                "                    \"Direction\": {\n" +
+                "                        \"Degrees\": 146,\n" +
+                "                        \"Localized\": \"SE\",\n" +
+                "                        \"English\": \"SE\"\n" +
+                "                    }\n" +
+                "                },\n" +
+                "                \"WindGust\": {\n" +
+                "                    \"Speed\": {\n" +
+                "                        \"Value\": 18.5,\n" +
+                "                        \"Unit\": \"km/h\",\n" +
+                "                        \"UnitType\": 7\n" +
+                "                    },\n" +
+                "                    \"Direction\": {\n" +
+                "                        \"Degrees\": 172,\n" +
+                "                        \"Localized\": \"S\",\n" +
+                "                        \"English\": \"S\"\n" +
+                "                    }\n" +
+                "                },\n" +
+                "                \"TotalLiquid\": {\n" +
+                "                    \"Value\": 5.6,\n" +
+                "                    \"Unit\": \"mm\",\n" +
+                "                    \"UnitType\": 3\n" +
+                "                },\n" +
+                "                \"Rain\": {\n" +
+                "                    \"Value\": 5.6,\n" +
+                "                    \"Unit\": \"mm\",\n" +
+                "                    \"UnitType\": 3\n" +
+                "                },\n" +
+                "                \"Snow\": {\n" +
+                "                    \"Value\": 0.0,\n" +
+                "                    \"Unit\": \"cm\",\n" +
+                "                    \"UnitType\": 4\n" +
+                "                },\n" +
+                "                \"Ice\": {\n" +
+                "                    \"Value\": 0.0,\n" +
+                "                    \"Unit\": \"mm\",\n" +
+                "                    \"UnitType\": 3\n" +
+                "                },\n" +
+                "                \"HoursOfPrecipitation\": 2.0,\n" +
+                "                \"HoursOfRain\": 2.0,\n" +
+                "                \"HoursOfSnow\": 0.0,\n" +
+                "                \"HoursOfIce\": 0.0,\n" +
+                "                \"CloudCover\": 94\n" +
+                "            },\n" +
+                "            \"Night\": {\n" +
+                "                \"Icon\": 15,\n" +
+                "                \"IconPhrase\": \"Tormentas eléctricas\",\n" +
+                "                \"HasPrecipitation\": true,\n" +
+                "                \"PrecipitationType\": \"Rain\",\n" +
+                "                \"PrecipitationIntensity\": \"Light\",\n" +
+                "                \"ShortPhrase\": \"Tormenta eléctrica en partes del área\",\n" +
+                "                \"LongPhrase\": \"Tormenta eléctrica en partes del área\",\n" +
+                "                \"PrecipitationProbability\": 40,\n" +
+                "                \"ThunderstormProbability\": 60,\n" +
+                "                \"RainProbability\": 40,\n" +
+                "                \"SnowProbability\": 0,\n" +
+                "                \"IceProbability\": 0,\n" +
+                "                \"Wind\": {\n" +
+                "                    \"Speed\": {\n" +
+                "                        \"Value\": 9.3,\n" +
+                "                        \"Unit\": \"km/h\",\n" +
+                "                        \"UnitType\": 7\n" +
+                "                    },\n" +
+                "                    \"Direction\": {\n" +
+                "                        \"Degrees\": 184,\n" +
+                "                        \"Localized\": \"S\",\n" +
+                "                        \"English\": \"S\"\n" +
+                "                    }\n" +
+                "                },\n" +
+                "                \"WindGust\": {\n" +
+                "                    \"Speed\": {\n" +
+                "                        \"Value\": 16.7,\n" +
+                "                        \"Unit\": \"km/h\",\n" +
+                "                        \"UnitType\": 7\n" +
+                "                    },\n" +
+                "                    \"Direction\": {\n" +
+                "                        \"Degrees\": 181,\n" +
+                "                        \"Localized\": \"S\",\n" +
+                "                        \"English\": \"S\"\n" +
+                "                    }\n" +
+                "                },\n" +
+                "                \"TotalLiquid\": {\n" +
+                "                    \"Value\": 1.0,\n" +
+                "                    \"Unit\": \"mm\",\n" +
+                "                    \"UnitType\": 3\n" +
+                "                },\n" +
+                "                \"Rain\": {\n" +
+                "                    \"Value\": 1.0,\n" +
+                "                    \"Unit\": \"mm\",\n" +
+                "                    \"UnitType\": 3\n" +
+                "                },\n" +
+                "                \"Snow\": {\n" +
+                "                    \"Value\": 0.0,\n" +
+                "                    \"Unit\": \"cm\",\n" +
+                "                    \"UnitType\": 4\n" +
+                "                },\n" +
+                "                \"Ice\": {\n" +
+                "                    \"Value\": 0.0,\n" +
+                "                    \"Unit\": \"mm\",\n" +
+                "                    \"UnitType\": 3\n" +
+                "                },\n" +
+                "                \"HoursOfPrecipitation\": 0.5,\n" +
+                "                \"HoursOfRain\": 0.5,\n" +
+                "                \"HoursOfSnow\": 0.0,\n" +
+                "                \"HoursOfIce\": 0.0,\n" +
+                "                \"CloudCover\": 98\n" +
+                "            },\n" +
+                "            \"Sources\": [\n" +
+                "                \"AccuWeather\"\n" +
+                "            ],\n" +
+                "            \"MobileLink\": \"http://m.accuweather.com/es/in/gobindapur/2920226/daily-weather-forecast/2920226?day=1&unit=c&lang=es-mx\",\n" +
+                "            \"Link\": \"http://www.accuweather.com/es/in/gobindapur/2920226/daily-weather-forecast/2920226?day=1&unit=c&lang=es-mx\"\n" +
+                "        }\n" +
+                "    ]\n" +
+                "}";
+        jsonObject = new JSONObject(object);*/
 
         try {
             URL path = new URL("http://dataservice.accuweather.com/forecasts/v1/daily/1day/"+cityWithWeather.getId()+"?apikey=i8cLO8jDZn2ZE8PiVfXTb17btelOTOjI&language=es-mx&details=true&metric=true");
@@ -83,7 +339,7 @@ public class Controller {
             BufferedReader br = new BufferedReader(in);
 
 
-            jsonArray = new JSONArray(br.readLine()) ;
+            jsonObject = new JSONObject(br.readLine());
             conn.disconnect();
         } catch (MalformedURLException | ProtocolException e) {
             e.printStackTrace();
@@ -97,35 +353,43 @@ public class Controller {
 
         Weather weather  = new Weather();
 
-        /**
-         * set the hair quality
-         */
-        weatherProps = (JSONObject) jsonArray.getJSONObject(0).get("Headline");
-        weather.setHairQuality(weatherProps.getString("Text"));
 
         /**
          * set the min and max temperature
          */
-        weatherProps = (JSONObject) jsonArray.getJSONObject(0).get("DailyForecasts");
-        weatherProps =weatherProps.getJSONObject("Temperature");
-        weatherProps  = weatherProps.getJSONObject("Minimum");
-        temperature = "Min: "+weatherProps.getString("Value")+""+weatherProps.getString("Unit");
-        weatherProps  = weatherProps.getJSONObject("Maximum");
-        temperature += "  Max: "+weatherProps.getString("Value")+""+weatherProps.getString("Unit");
+        weatherPropsArray =  (JSONArray) jsonObject.get("DailyForecasts");
+        weatherProps = (JSONObject) weatherPropsArray.get(0);
+
+        weatherProps = weatherProps.getJSONObject("Temperature");
+        propsTemperature  = weatherProps.getJSONObject("Minimum");
+        temperature = "Min: "+propsTemperature.getString("Value")+""+propsTemperature.getString("Unit");
+        propsTemperature  = weatherProps.getJSONObject("Maximum");
+        temperature += "  Max: "+propsTemperature.getString("Value")+""+propsTemperature.getString("Unit");
         weather.setTemperature(temperature);
 
         /**
          * set day conditions
          */
-        weatherProps = (JSONObject) jsonArray.getJSONObject(0).get("DailyForecasts");
+        weatherProps = (JSONObject) weatherPropsArray.get(0);
         weatherProps =weatherProps.getJSONObject("Day");
-        weather.setWeatherPhrase(weatherProps.getString("IconPhrase"));
+        weather.setWeatherDay(weatherProps.getString("ShortPhrase"));
 
-        /*weather.setTemperature(""+weatherProps.get("Value")+" "+weatherProps.get("Unit"));
-        weatherProps = (JSONObject) jsonArray.getJSONObject(0);
-        weather.setDayLight(weatherProps.getString("IsDaylight"));
-        weather.setPrecipitation(weatherProps.getString("PrecipitationProbability"));
-        weather.setWeatherPhrase(weatherProps.getString("IconPhrase"));*/
+        /**
+         * set night conditions
+         */
+        weatherProps = (JSONObject) weatherPropsArray.get(0);
+        weatherProps =weatherProps.getJSONObject("Night");
+        weather.setWeatherNight(weatherProps.getString("ShortPhrase"));
+
+        /**
+         * set date
+         */
+        weatherProps = (JSONObject) weatherPropsArray.get(0);
+        String fullDate =weatherProps.getString("Date");
+        String[] date = fullDate.split(":");
+        date = date[0].split("T");
+        weather.setDate(date[0]);
+
         cityWithWeather.setWeather(weather);
 
        return cityWithWeather;
@@ -136,10 +400,10 @@ public class Controller {
         TwitterBot bot = TwitterBot.newBot();
        for (State state : country.getStates()){
            for (City city: state.getCities()){
-               tweetText+= city.getName()+"\n"+
-                       city.getWeather().getWeatherPhrase()+"\n"+
-                       city.getWeather().getHairQuality()+"\n"+
-                       city.getWeather().getTemperature();
+               tweetText+= city.getName()+" "+city.getWeather().getDate()+"\n"+
+                       "Temperatura: "+city.getWeather().getTemperature()+"\n"+
+                       "Día: "+city.getWeather().getWeatherDay()+"\n"+
+                       "Noche: "+city.getWeather().getWeatherNight();
                bot.newTweet(tweetText);
            }
        }

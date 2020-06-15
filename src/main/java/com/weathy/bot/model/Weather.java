@@ -3,11 +3,9 @@ package com.weathy.bot.model;
 public class Weather {
 
     private String temperature;
-    private String weatherPhrase;
-    private String dayLight;
-    private String precipitation;
-    private String hairQuality;
-    private String hoursOfSun;
+    private String weatherDay;
+    private String weatherNight;
+    private String date;
 
     public Weather(){}
 
@@ -16,47 +14,31 @@ public class Weather {
         this.temperature = temperature;
     }
 
-    public void setWeatherPhrase(String weatherPhrase){
-        this.weatherPhrase = weatherPhrase;
+    public void setWeatherDay(String weatherDay) {
+        this.weatherDay = weatherDay;
     }
 
-    public void setDayLight(String dayLight){
-        this.dayLight = dayLight;
+    public String getWeatherNight() {
+        return weatherNight;
     }
 
-    public void setPrecipitation(String precipitation1){
-        this.precipitation = precipitation1;
-    }
-
-    public void setHairQuality(String hairQuality) {
-        this.hairQuality = hairQuality;
-    }
-
-    public void setHoursOfSun(String hoursOfSun) {
-        this.hoursOfSun = hoursOfSun;
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public String getTemperature(){
         return this.temperature;
     }
 
-    public String getWeatherPhrase(){
-        return this.weatherPhrase;
+    public String getDate() {
+        return date;
     }
 
-    public String getDayLight(){
-        return this.dayLight;
+    public String getWeatherDay() {
+        return weatherDay;
     }
 
-    public String getPrecipitation(){
-        return this.precipitation;
-    }
-
-    public String getHairQuality() {
-        return hairQuality;
-    }
-
-    public String getHoursOfSun() {
-        return hoursOfSun;
+    public void setWeatherNight(String weatherNight) {
+        this.weatherNight = weatherNight;
     }
 }

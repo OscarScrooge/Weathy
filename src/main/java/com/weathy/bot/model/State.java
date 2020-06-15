@@ -16,6 +16,7 @@ public class State {
     private void setCitiesAtBeginig(List<Integer> idCities){
         for(int id:idCities){
             City city = new City(id);
+            city.setName(this.name);
             cities.add(city);
         }
     }

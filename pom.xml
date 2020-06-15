@@ -9,8 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.weathy</groupId>
-    <artifactId>demo</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <artifactId>Weathy</artifactId>
+    <version>1.0</version>
+    <packaging>jar</packaging>
     <name>Weathy</name>
     <description>twitter bot for weather</description>
 
@@ -52,6 +53,12 @@
             <artifactId>twitter4j-core</artifactId>
             <version>[4.0,)</version>
         </dependency>
+      <!--  <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>RELEASE</version>
+            <scope>compile</scope>
+        </dependency>!-->
     </dependencies>
 
     <build>
@@ -59,6 +66,18 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                   <archive>
+                     <manifestFile>
+                         src/main/java/META-INF/MANIFEST.MF
+                     </manifestFile>
+
+                   </archive>
+                </configuration>
             </plugin>
         </plugins>
     </build>
