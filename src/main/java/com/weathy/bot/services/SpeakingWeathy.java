@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -16,7 +17,7 @@ public class SpeakingWeathy {
     private HashMap<String, List<Integer>> data;
 
     @RequestMapping("/")
-    public  String SayHello() throws JSONException {
+    public  String SayHello() throws JSONException, UnsupportedEncodingException {
        Controller conditions= new Controller(data);
 
        return "hola";

@@ -5,6 +5,8 @@ import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 
+import java.io.UnsupportedEncodingException;
+
 public class TwitterBot {
 
     private String tweet="It is empty at this moment";
@@ -32,7 +34,12 @@ public class TwitterBot {
 
     public void newTweet(String tweetText){
          tweet =tweetText;
+         try{
+           byte encode[] = tweet.getBytes("UTF8");
+           tweet = new String(encode);
+         } catch(Exception e){
 
+         }
         Twitter twitter = TwitterFactory.getSingleton();
         try {
             Status status = twitter.updateStatus(tweet);

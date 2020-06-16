@@ -12,10 +12,14 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -25,7 +29,7 @@ public class Controller {
     private Country country;
 
 
-    public Controller(HashMap<String, List<Integer>> data) throws JSONException {
+    public Controller(HashMap<String, List<Integer>> data) throws JSONException, UnsupportedEncodingException {
         this.data = data;
         setCountry();
         setTweet();
@@ -388,6 +392,11 @@ public class Controller {
         String fullDate =weatherProps.getString("Date");
         String[] date = fullDate.split(":");
         date = date[0].split("T");
+        Date hour = new Date();
+        String strDateFormat = "hh:mm:ss";
+        DateFormat dateFormat = new SimpleDateFormat(strDateFormat);
+        String formattedDate= dateFormat.format(hour);
+        date[0] = " "+date[0] +"   "+formattedDate;
         weather.setDate(date[0]);
 
         cityWithWeather.setWeather(weather);
@@ -395,7 +404,7 @@ public class Controller {
        return cityWithWeather;
     }
 
-    private void setTweet(){
+    private void setTweet() throws UnsupportedEncodingException {
         String tweetText="";
         TwitterBot bot = TwitterBot.newBot();
        for (State state : country.getStates()){
