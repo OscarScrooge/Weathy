@@ -16,8 +16,13 @@ public class SpeakingWeathy {
     @Value("#{${props.mexico.city}}")
     private HashMap<String, List<Integer>> data;
 
+    @Value("${accuwather.api.key}")
+    private String accuwatherApiKey;
+
     @RequestMapping("/")
     public  String SayHello() throws JSONException, UnsupportedEncodingException {
+
+       Controller.accuwatherApiKey = this.accuwatherApiKey;
        Controller conditions= new Controller(data);
 
        return "hola";

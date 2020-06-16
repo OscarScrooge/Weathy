@@ -3,6 +3,9 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**
 !**/src/test/**
+out/
+Custom.properties
+twitter4j.properties
 
 ### STS ###
 .apt_generated
