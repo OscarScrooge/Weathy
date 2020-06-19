@@ -8,6 +8,7 @@ out
 
 twitter4j.properties
 Custom.properties
+Wheathy.jpg
 
 src/main/resources/twitter4j.properties
 src/main/resources/Custom.properties
